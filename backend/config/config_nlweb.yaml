@@ -1,0 +1,23 @@
+sites: "localhost"
+
+data_folders:
+  json_data: "../data/catalog"
+  json_with_embeddings: "../data/embeddings"
+
+tool_selection_enabled: false
+memory_enabled: false
+analyze_query_enabled: false
+decontextualize_enabled: false
+required_info_enabled: false
+aggregation_enabled: false
+who_endpoint_enabled: false
+
+scoring:
+  nlwebscorer:
+    enabled: false
+
+chatbot_instructions:
+  search_results: >
+    IMPORTANT: Present results as structured product cards.
+    For each product include: name as hyperlink, price, category, and a brief description.
+    Highlight spare parts and accessories with their parent product compatibility.

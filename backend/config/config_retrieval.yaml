@@ -1,0 +1,8 @@
+write_endpoint: qdrant_server
+
+endpoints:
+  qdrant_server:
+    enabled: true
+    api_endpoint_env: QDRANT_URL
+    index_name: furnova_collection
+    db_type: qdrant

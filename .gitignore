@@ -1,0 +1,54 @@
+# ─── Credenciales y entorno ───────────────────────────────────────────────────
+.env
+*.key
+*.pem
+*.p12
+
+# ─── Frontend ─────────────────────────────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# ─── Rust / Gateway ───────────────────────────────────────────────────────────
+gateway/target/
+
+# ─── Python / NLWeb ───────────────────────────────────────────────────────────
+# El virtualenv vive en el repo de NLWeb, no aquí, pero por si acaso:
+.venv/
+__pycache__/
+*.py[cod]
+*.pyo
+
+# ─── Base de datos vectorial ──────────────────────────────────────────────────
+# Los datos de Qdrant son regenerables con ./backend/scripts/ingest.sh
+backend/data/db/
+
+# ─── Embeddings en caché ──────────────────────────────────────────────────────
+# Generados automáticamente durante la ingesta. Pesados y regenerables.
+backend/data/embeddings/
+
+# ─── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+/tmp/nlweb.log
+
+# ─── macOS ────────────────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ─── Linux ────────────────────────────────────────────────────────────────────
+*~
+.fuse_hidden*
+
+# ─── IDEs ─────────────────────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+.nvim/
+
+# ─── Symlinks de config (apuntan a NLWeb, no son portables) ───────────────────
+# Estos se recrean con: ln -s ~/Documents/NLWeb/config/prompts.xml backend/config/
+backend/config/prompts.xml
+backend/config/tools.xml
+backend/config/config_logging.yaml

@@ -1,0 +1,12 @@
+preferred_provider: ollama
+
+providers:
+  ollama:
+    api_endpoint_env: OLLAMA_ENDPOINT
+    model: nomic-embed-text
+
+  # Fallback a OpenAI si está disponible
+  openai:
+    api_key_env: OPENAI_API_KEY
+    api_endpoint_env: OPENAI_ENDPOINT
+    model: text-embedding-3-small

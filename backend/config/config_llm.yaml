@@ -1,0 +1,18 @@
+preferred_endpoint: ollama
+
+endpoints:
+  ollama:
+    api_endpoint_env: OLLAMA_ENDPOINT
+    llm_type: ollama
+    models:
+      high: llama3.2:3b
+      low: llama3.2:3b
+
+  # Fallback a OpenAI si está disponible
+  openai:
+    api_key_env: OPENAI_API_KEY
+    api_endpoint_env: OPENAI_ENDPOINT
+    llm_type: openai
+    models:
+      high: gpt-4.1
+      low: gpt-4.1-mini

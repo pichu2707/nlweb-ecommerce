@@ -1,0 +1,34 @@
+project: nlweb-ecommerce
+initialized: 2026-06-24
+
+context: |
+  NLTravel — natural language hotel search prototype.
+  Stack: SolidJS frontend, Rust/Axum gateway, Python NLWeb backend, Qdrant vector DB.
+  Gateway proxies SSE from NLWeb /ask to the frontend.
+  Frontend uses SolidJS signals/stores (no framework router).
+  No test runner configured in frontend or gateway.
+
+strict_tdd: false
+
+testing:
+  strict_tdd: false
+  reason: No test runner detected in frontend (no vitest/jest) or gateway (no cargo test deps)
+  layers:
+    unit: false
+    integration: false
+    e2e: false
+  quality:
+    linter: false
+    type_checker: false
+    formatter: false
+
+artifact_store: openspec
+
+phases:
+  proposal:  openspec/changes/{change}/proposal.md
+  spec:      openspec/changes/{change}/spec.md
+  design:    openspec/changes/{change}/design.md
+  tasks:     openspec/changes/{change}/tasks.md
+  apply:     openspec/changes/{change}/apply-progress.md
+  verify:    openspec/changes/{change}/verify-report.md
+  archive:   openspec/changes/archive/{change}.md

@@ -61,6 +61,35 @@ body {
 /* ─── SearchBar ─── */
 .search-wrapper { position: relative; }
 
+/* Conversation history chips */
+.conversation-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .4rem;
+  padding: 0 0 .6rem;
+}
+.chip {
+  background: rgba(255,255,255,.15);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: 999px;
+  padding: .2rem .75rem;
+  font-size: .8rem;
+  white-space: nowrap;
+  line-height: 1.6;
+}
+.chip--reset {
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.45);
+  cursor: pointer;
+  font-weight: 600;
+  transition: background .15s;
+}
+.chip--reset:hover {
+  background: rgba(255,255,255,.22);
+}
+
 .search-bar {
   display: flex;
   gap: .75rem;

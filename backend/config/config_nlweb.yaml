@@ -7,7 +7,7 @@ data_folders:
 tool_selection_enabled: false
 memory_enabled: false
 analyze_query_enabled: false
-decontextualize_enabled: false
+decontextualize_enabled: true
 required_info_enabled: false
 aggregation_enabled: false
 who_endpoint_enabled: false

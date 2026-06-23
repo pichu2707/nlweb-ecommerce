@@ -7,6 +7,27 @@ export const [sortBy, setSortBy] = createSignal('relevance') // relevance | pric
 export const [filterType, setFilterType] = createSignal('all') // all | Hotel | Hostal | Resort | Lodge | Camping | Glamping
 export const [sceneBg, setSceneBg] = createSignal('default') // playa | montaña | ciudad | jungla | desierto | nieve | default
 
+// Conversation history — sliding window of previous queries (max 3)
+const HISTORY_MAX = 3
+const INACTIVITY_MS = 5 * 60 * 1000 // 5 minutes
+
+export const [conversationHistory, setConversationHistory] = createSignal([])
+
+let inactivityTimer = null
+
+function resetInactivityTimer() {
+  clearTimeout(inactivityTimer)
+  inactivityTimer = setTimeout(() => {
+    setConversationHistory([])
+  }, INACTIVITY_MS)
+}
+
+export function resetConversation() {
+  clearTimeout(inactivityTimer)
+  inactivityTimer = null
+  setConversationHistory([])
+}
+
 // Palabras clave → escena visual
 const SCENE_KEYWORDS = {
   playa:   ['playa', 'playa', 'caribe', 'cancún', 'cancun', 'maldivas', 'bali', 'seminyak', 'tropical', 'mar', 'arena', 'coral', 'buceo', 'snorkel', 'surf'],
@@ -40,6 +61,8 @@ export function filteredAndSorted() {
 export async function search(query) {
   if (!query.trim()) return
 
+  const prev = conversationHistory() // capture before clearing results
+
   setResults([])
   setStatus('loading')
   setErrorMsg('')
@@ -49,7 +72,7 @@ export async function search(query) {
     const response = await fetch('/search', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query, site: 'localhost' }),
+      body: JSON.stringify({ query, site: 'localhost', prev }),
     })
     if (!response.ok) throw new Error(`HTTP ${response.status}`)
 
@@ -81,9 +104,14 @@ export async function search(query) {
 
     setResults(prev => [...prev].sort((a, b) => (b.score ?? 0) - (a.score ?? 0)))
     setStatus('done')
+
+    // Append to history only on success (SC-06: errors don't pollute history)
+    setConversationHistory(h => [...h, query].slice(-HISTORY_MAX))
+    resetInactivityTimer()
   } catch (err) {
     setErrorMsg(err.message)
     setStatus('error')
+    // History and timer are NOT updated on error
   }
 }
 

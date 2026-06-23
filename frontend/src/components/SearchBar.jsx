@@ -1,5 +1,23 @@
 import { createSignal } from 'solid-js'
-import { search, status, setSortBy, setFilterType, sortBy, filterType } from '../stores/search.js'
+import { Show, For } from 'solid-js'
+import { search, status, setSortBy, setFilterType, sortBy, filterType, conversationHistory, resetConversation } from '../stores/search.js'
+
+const truncate = (text) => text.length > 40 ? text.slice(0, 40) + '…' : text
+
+function ConversationChips() {
+  return (
+    <Show when={conversationHistory().length > 0}>
+      <div class="conversation-chips">
+        <For each={conversationHistory()}>
+          {(q) => <span class="chip">{truncate(q)}</span>}
+        </For>
+        <button type="button" class="chip chip--reset" onClick={resetConversation}>
+          Nueva búsqueda
+        </button>
+      </div>
+    </Show>
+  )
+}
 
 const SUGGESTIONS = [
   'Playas de Cancún económico',
@@ -33,6 +51,7 @@ export default function SearchBar() {
 
   return (
     <div class="search-wrapper">
+      <ConversationChips />
       <form class="search-bar" onSubmit={handleSubmit}>
         <div class="search-input-wrap">
           <span class="search-icon">✦</span>

@@ -23,6 +23,8 @@ struct SearchRequest {
     query: String,
     #[serde(default = "default_site")]
     site: String,
+    #[serde(default)]
+    prev: Vec<String>,
 }
 
 fn default_site() -> String {
@@ -85,6 +87,7 @@ async fn search_proxy(
     let nlweb_body = serde_json::json!({
         "query": payload.query,
         "site":  payload.site,
+        "prev":  payload.prev,
         "meta":  { "version": "0.55" }
     });
 

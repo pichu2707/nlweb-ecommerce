@@ -5,8 +5,11 @@ endpoints:
     api_endpoint_env: OLLAMA_ENDPOINT
     llm_type: ollama
     models:
-      high: qwen2.5:7b
-      low: qwen2.5:7b
+      # Built from backend/models/qwen2.5-7b-rank.Modelfile (top_k=1 -> greedy decoding).
+      # NLWeb calls Ollama with temperature 0.7 and offers no way to override it,
+      # which made every ranking score a fresh random draw.
+      high: qwen2.5-7b-rank
+      low: qwen2.5-7b-rank
 
   # Fallback a OpenAI si está disponible
   openai:

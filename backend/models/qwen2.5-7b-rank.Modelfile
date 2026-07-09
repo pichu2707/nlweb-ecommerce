@@ -1,0 +1,23 @@
+FROM qwen2.5:7b
+
+# NLWeb sends only `{"temperature": 0.7}` in its Ollama options
+# (llm_providers/ollama.py:123-125) and `ask_llm()` exposes no way to change it.
+# Request options override Modelfile parameters, so temperature cannot be pinned
+# here — but top_k is never sent, and top_k=1 collapses sampling to the argmax,
+# which makes the temperature irrelevant.
+#
+# Ranking scores must be reproducible: the same item and the same query have to
+# yield the same score on every run, or no measurement of the ranker means anything.
+#
+# THIS DOES NOT MAKE THE SEARCH DETERMINISTIC, and it is not the main bug.
+# `core/ranking.py:227` calls `ask_llm()` without a timeout, inheriting the 8s
+# default from `core/llm.py:161`, while ~50 per-item calls fan out concurrently
+# and serialise on one GPU at ~1.2s each — about 60s of work against an 8s budget.
+# A timed-out call returns `{}` (core/llm.py:246), `ranking["score"]` raises
+# KeyError, and a bare `except Exception` (core/ranking.py:260) drops the item in
+# silence. Roughly 44 of 50 candidates never reach the user, and which ones survive
+# depends on GPU scheduling. Greedy decoding removes sampling noise; it cannot
+# remove a race. Fixing that needs a batched RankingPrompt (~50 calls -> ~2),
+# which means patching NLWeb itself.
+PARAMETER top_k 1
+PARAMETER seed 42

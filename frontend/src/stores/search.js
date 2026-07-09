@@ -140,9 +140,7 @@ function normalizeItem(item) {
 
   const lodgingType = s['@type'] ?? 'Hotel'
   const roomTypes = amenities
-    .filter(a => ['Habitación doble','Habitación sencilla','Habitación individual',
-                  'Habitación compartida','Suite','Villa privada','Cabaña doble',
-                  'Cápsula individual','Tienda equipada','Cúpula doble','Bungalow sobre el agua'].includes(a.name))
+    .filter(a => a.propertyID?.startsWith('room:'))
     .map(a => a.name)
 
   const priceRaw = parseFloat(offer.price)
@@ -165,7 +163,9 @@ function normalizeItem(item) {
     reviewCount: rating.reviewCount ? parseInt(rating.reviewCount) : null,
     lodgingType,
     roomTypes,
-    amenities: amenities.map(a => ({ name: a.name, value: a.value })),
+    amenities: amenities
+      .filter(a => a.propertyID?.startsWith('amenity:'))
+      .map(a => ({ id: a.propertyID, name: a.name, value: a.value, description: a.description })),
   }
 }
 

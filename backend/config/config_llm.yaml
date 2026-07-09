@@ -5,8 +5,8 @@ endpoints:
     api_endpoint_env: OLLAMA_ENDPOINT
     llm_type: ollama
     models:
-      high: llama3.2:3b
-      low: llama3.2:3b
+      high: qwen2.5:7b
+      low: qwen2.5:7b
 
   # Fallback a OpenAI si está disponible
   openai:

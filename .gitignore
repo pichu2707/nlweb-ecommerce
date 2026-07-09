@@ -48,7 +48,9 @@ backend/data/embeddings/
 .nvim/
 
 # ─── Symlinks de config (apuntan a NLWeb, no son portables) ───────────────────
-# Estos se recrean con: ln -s ~/Documents/NLWeb/config/prompts.xml backend/config/
-backend/config/prompts.xml
+# Estos se recrean con: ln -s ~/Documents/NLWeb/config/tools.xml backend/config/
 backend/config/tools.xml
 backend/config/config_logging.yaml
+
+# prompts.xml ya NO se ignora: es una copia propia con el RankingPrompt calibrado,
+# no un symlink. NLWeb la carga desde NLWEB_CONFIG_DIR en lugar de la suya.

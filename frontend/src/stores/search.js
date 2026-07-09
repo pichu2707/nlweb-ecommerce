@@ -4,7 +4,7 @@ export const [results, setResults] = createSignal([])
 export const [status, setStatus] = createSignal('idle')
 export const [errorMsg, setErrorMsg] = createSignal('')
 export const [sortBy, setSortBy] = createSignal('relevance') // relevance | price_asc | price_desc | rating
-export const [filterType, setFilterType] = createSignal('all') // all | Hotel | Hostal | Resort | Lodge | Camping | Glamping
+export const [filterType, setFilterType] = createSignal('all') // all | Hotel | Motel | Hostel | Resort | Campground | BedAndBreakfast
 export const [sceneBg, setSceneBg] = createSignal('default') // playa | montaña | ciudad | jungla | desierto | nieve | default
 
 // Conversation history — sliding window of previous queries (max 3)
@@ -138,7 +138,7 @@ function normalizeItem(item) {
   const offer = s.offers ?? {}
   const amenities = s.amenityFeature ?? []
 
-  const lodgingType = amenities.find(a => a.name === 'Tipo')?.value ?? 'Hotel'
+  const lodgingType = s['@type'] ?? 'Hotel'
   const roomTypes = amenities
     .filter(a => ['Habitación doble','Habitación sencilla','Habitación individual',
                   'Habitación compartida','Suite','Villa privada','Cabaña doble',
@@ -165,7 +165,7 @@ function normalizeItem(item) {
     reviewCount: rating.reviewCount ? parseInt(rating.reviewCount) : null,
     lodgingType,
     roomTypes,
-    amenities: amenities.filter(a => a.name !== 'Tipo').map(a => ({ name: a.name, value: a.value })),
+    amenities: amenities.map(a => ({ name: a.name, value: a.value })),
   }
 }
 

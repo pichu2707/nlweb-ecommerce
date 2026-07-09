@@ -1,9 +1,13 @@
 import { Show, For } from 'solid-js'
 
 const TYPE_EMOJI = {
-  'Hotel': '🏨', 'Hostal': '🏠', 'Resort': '🌴', 'Lodge': '🏕️',
-  'Camping': '⛺', 'Glamping': '✨', 'Riad': '🕌', 'Chalet': '🏔️',
-  'Hotel Cápsula': '🔲', 'Safari Lodge': '🦁', 'Lodge Ecológico': '🌿',
+  'Hotel': '🏨', 'Motel': '🛣️', 'Hostel': '🏠',
+  'Resort': '🌴', 'Campground': '⛺', 'BedAndBreakfast': '🏡',
+}
+
+const TYPE_LABEL = {
+  'Hotel': 'Hotel', 'Motel': 'Motel', 'Hostel': 'Hostal',
+  'Resort': 'Resort', 'Campground': 'Camping', 'BedAndBreakfast': 'Casa rural',
 }
 
 const PRICE_LABEL = { '€': 'Económico', '€€': 'Precio medio', '€€€': 'Superior', '€€€€': 'Lujo' }
@@ -41,7 +45,7 @@ export default function TravelCard({ result }) {
           />
           <div class="card-image placeholder" style="display:none">{emoji()}</div>
         </Show>
-        <span class="badge-type">{emoji()} {result.lodgingType}</span>
+        <span class="badge-type">{emoji()} {TYPE_LABEL[result.lodgingType] ?? result.lodgingType}</span>
         <Show when={result.priceRange}>
           <span class="badge-price-range" title={PRICE_LABEL[result.priceRange]}>
             {result.priceRange}

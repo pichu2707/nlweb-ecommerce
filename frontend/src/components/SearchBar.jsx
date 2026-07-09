@@ -86,14 +86,11 @@ export default function SearchBar() {
             <select value={filterType()} onChange={e => setFilterType(e.target.value)}>
               <option value="all">Todos</option>
               <option value="Hotel">Hotel</option>
-              <option value="Hostal">Hostal</option>
+              <option value="Motel">Motel</option>
+              <option value="Hostel">Hostal</option>
               <option value="Resort">Resort</option>
-              <option value="Lodge">Lodge</option>
-              <option value="Camping">Camping</option>
-              <option value="Glamping">Glamping</option>
-              <option value="Riad">Riad</option>
-              <option value="Chalet">Chalet</option>
-              <option value="Hotel Cápsula">Cápsula</option>
+              <option value="Campground">Camping</option>
+              <option value="BedAndBreakfast">Casa rural</option>
             </select>
           </div>
           <div class="filter-group">
